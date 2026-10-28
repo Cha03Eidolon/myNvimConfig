@@ -27,12 +27,26 @@ return function()
 		},
 	})
 
+    -- adapters
+    dap.adapters["lldb"] = {
+        type = "executable",
+        command = "lldb-dap",
+        name = "lldb"
+    }
+
+    dap.adapters["gdb"] = {
+        type = "executable",
+        command = "gdb",
+        args = {"-i", "dap"},
+        name = "gdb"
+    }
+
 	-- cpp
 	local last_args = {} -- contain args
 	dap.configurations.cpp = {
 		{
 			name = "Launch File",
-			type = "codelldb", -- 调试适配器类型
+			type = "gdb", -- 调试适配器类型
 			request = "launch",
 			program = function()
 				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
